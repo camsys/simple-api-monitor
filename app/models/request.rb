@@ -10,6 +10,7 @@ class Request < ApplicationRecord
 
   def update
    	self.response_code, self.response_body = self.call
+   	self.last_updated = Time.now 
    	self.save 
    	tests.each do |test|
    	  test.run    

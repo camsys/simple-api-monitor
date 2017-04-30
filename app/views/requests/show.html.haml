@@ -1,6 +1,6 @@
 -@request.tests.each do |test|
   .row
-    .col-md-2
+    .col-md-1
     .col-md-2
       -if test.status == true
         .label.label-success
@@ -14,5 +14,7 @@
     .col-md-3
       =test.name
     .col-md-3
-      5 Minutes Ago  
+      =test.key
     .col-md-2
+      =test.value
+    .col-md-1
