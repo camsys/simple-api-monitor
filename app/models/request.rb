@@ -9,9 +9,16 @@ class Request < ApplicationRecord
   end
 
   def update
-   	self.response_code, self.response_body = self.call
-   	self.last_updated = Time.now 
-   	self.save 
+  	begin 
+   	  self.response_code, self.response_body = self.call
+   	  self.last_updated = Time.now 
+   	  self.save 
+   	rescue
+   	  self.response_code = nil
+   	  self.response_body = nil
+   	  self.last_updated = Time.now 
+   	  self.save 
+   	end
    	tests.each do |test|
    	  test.run    
    	end

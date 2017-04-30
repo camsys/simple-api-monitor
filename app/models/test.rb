@@ -9,10 +9,22 @@ class Test < ApplicationRecord
   scope :passing, -> { where(:status => true) }
 
   def run
-    body = JSON.parse(request.response_body)
-    result = eval(self.key.gsub('body', body.to_s))
-    self.status = (result == value)
-    self.save
+  	if request.response_body.nil? or request.response_code.nil?
+  	  self.status = false
+  	  self.save
+  	  return
+  	end
+
+  	begin
+      body = JSON.parse(request.response_body)
+      result = eval(self.key.gsub('body', body.to_s))
+      self.status = (result == value)
+      self.save
+    rescue
+      self.status = false
+      self.save
+     end
+
   end
 
 end
