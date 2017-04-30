@@ -2,7 +2,7 @@ class Request < ApplicationRecord
   
   require 'net/http'
 
-  has_many :tests
+  has_many :tests, dependent: :delete_all
 
   def status
   	(tests.failing.count > 0) ? false : true
@@ -11,13 +11,9 @@ class Request < ApplicationRecord
   def update
    	self.response_code, self.response_body = self.call
    	self.save 
-
-   	puts self.response_code
-   	puts self.response_body
-   	
-   	#tests.each do |test|
-   	#  test.run
-    #end
+   	tests.each do |test|
+   	  test.run    
+   	end
   end
 
   def call 
