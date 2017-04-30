@@ -1,0 +1,18 @@
+-@request.tests.each do |test|
+  .row
+    .col-md-2
+    .col-md-2
+      -if test.status == true
+        .label.label-success
+          Pass
+      -elsif test.status == false
+        .label.label-danger
+          Fail
+      -else 
+        .label.label-default
+          N/A
+    .col-md-3
+      =test.name
+    .col-md-3
+      5 Minutes Ago  
+    .col-md-2
