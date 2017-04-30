@@ -1,10 +1,19 @@
 
 -@requests.each do |request|
   .row
-    .col-md-4
-      Up
-    .col-md-4
-      Test
-    .col-md-4
+    .col-md-2
+
+    .col-md-2
+      -if request.status
+        .label.label-success
+          Pass
+      -else
+        .label.label-danger
+          Fail
+    .col-md-3
       =request.name
+    .col-md-3
+      5 Minutes Ago  
+    .col-md-2
+
 
