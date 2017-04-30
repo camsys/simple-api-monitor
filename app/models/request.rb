@@ -4,18 +4,20 @@ class Request < ApplicationRecord
 
   has_many :tests
 
-  attr_reader :response_code
-  attr_reader :response_body
-
   def status
   	(tests.failing.count > 0) ? false : true
   end
 
   def update
-   	@response_code, @response_body = self.call
-   	tests.each do |test|
-   	  test.run
-    end
+   	self.response_code, self.response_body = self.call
+   	self.save 
+
+   	puts self.response_code
+   	puts self.response_body
+   	
+   	#tests.each do |test|
+   	#  test.run
+    #end
   end
 
   def call 
