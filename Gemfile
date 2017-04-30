@@ -38,6 +38,7 @@ gem 'jbuilder', '~> 2.5'
 ### Internal Views #########################
 gem 'awesome_print'
 gem 'haml-rails'
+gem 'bootstrap-sass', '~> 3.3.6'
 ############################################
 
 group :development, :test do
