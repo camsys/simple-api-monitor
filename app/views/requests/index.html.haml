@@ -4,12 +4,13 @@
     .col-md-2
 
     .col-md-2
-      -if request.status
-        .label.label-success
-          Pass
-      -else
-        .label.label-danger
-          Fail
+      =link_to(request_path(request)) do
+        -if request.status
+          .label.label-success
+            Pass
+        -else
+          .label.label-danger
+            Fail
     .col-md-3
       =request.name
     .col-md-3
