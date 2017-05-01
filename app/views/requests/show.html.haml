@@ -1,6 +1,6 @@
 -@request.tests.each do |test|
   .row
-    .col-md-1
+    .col-md-2
     .col-md-2
       -if test.status == true
         .label.label-success
@@ -11,10 +11,41 @@
       -else 
         .label.label-default
           N/A
-    .col-md-3
+    .col-md-2
       =test.name
-    .col-md-3
+    .col-md-2
       =test.key
     .col-md-2
       =test.value
-    .col-md-1
+    .col-md-2
+
+%br
+.row
+  .col-md-2
+  .col-md-8
+    .panel.panel-default
+      .panel-heading
+        URL
+      .panel-body
+        =@request.url 
+
+%br
+.row
+  .col-md-2
+  .col-md-8
+    .panel.panel-default
+      .panel-heading
+        Response Code
+      .panel-body
+        =@request.response_code 
+
+%br
+.row
+  .col-md-2
+  .col-md-8
+    .panel.panel-default
+      .panel-heading
+        Response Body
+      .panel-body
+        %pre
+          =@request.response_body
