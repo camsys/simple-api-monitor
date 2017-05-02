@@ -9,7 +9,10 @@ class Request < ApplicationRecord
   end
 
   def update
-  	begin 
+    new_failures = []
+
+  	#### Make the call
+    begin 
    	  self.response_code, self.response_body = self.call
    	  self.last_updated = Time.now 
    	  self.save 
@@ -19,10 +22,17 @@ class Request < ApplicationRecord
    	  self.last_updated = Time.now 
    	  self.save 
    	end
-   	tests.each do |test|
-   	  test.run    
+
+   	#### Run all the tests associated with the call
+    tests.each do |test|
+   	  if test.run  
+        new_failures << "#{self.name}: #{test.name}"
+      end  
    	end
-  end
+     
+    return new_failures
+   
+   end
 
   def call 
     uri = URI.parse(url)

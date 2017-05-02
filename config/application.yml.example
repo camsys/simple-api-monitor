@@ -1,0 +1,11 @@
+defaults: &defaults
+  PAGER_DUTY_SERVICE_KEY: "Your Service Key"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
