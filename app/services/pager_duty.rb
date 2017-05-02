@@ -8,7 +8,7 @@ class PagerDuty
   	hash = {    
 		  "service_key": ENV['PAGER_DUTY_SERVICE_KEY'],
 		  "event_type": "trigger",
-		  "description": "Failed Events Detected",
+		  "description": failures.first,
 		  "details": failures
 		}
   	call url, hash 
