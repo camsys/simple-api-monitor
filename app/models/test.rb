@@ -19,7 +19,13 @@ class Test < ApplicationRecord
 
   	begin
       body = JSON.parse(request.response_body)
-      result = eval(self.key.gsub('body', body.to_s))
+      code = JSON.parse(request.response_code)
+      
+      #Replace every instance of _body_ with the actual body of the response. 
+      #Replace every instance of _code_ with the actual code of the response.
+      decoded_key = self.key.gsub('_body_', body.to_s).gsub('_code_', code.to_s)      
+      
+      result = eval(decoded_key)
       new_status = (result == value)
       new_failure = self.new_failure? new_status
       self.status = new_status
@@ -30,7 +36,7 @@ class Test < ApplicationRecord
       self.status = false
       self.save
       return new_failure 
-     end
+    end
 
   end
 
