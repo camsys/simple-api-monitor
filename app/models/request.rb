@@ -8,7 +8,7 @@ class Request < ApplicationRecord
   	(tests.failing.count > 0) ? false : true
   end
 
-  def update
+  def refresh
     new_failures = []
 
   	#### Make the call
@@ -35,6 +35,10 @@ class Request < ApplicationRecord
    end
 
   def call 
+    # The following will find all instances of _{ blah }_ and then evaluate the blay
+    # E.g., 'http://www.checksomething.com/at/_{(Time.now+2.weeks).strftime('%d-%m-%Y')}_' will be translated into
+    #       'http://www.checksomething.com/at/22-05-2017' # (Assuming that the request is run on May 8, 2017)
+    url = self.evaluate
     uri = URI.parse(url)
     req = Net::HTTP::Get.new(uri.to_s)
     res = Net::HTTP.start(uri.host, uri.port) {|http|
@@ -42,4 +46,9 @@ class Request < ApplicationRecord
     }
     return res.code, res.body
   end
+
+  def evaluate
+    return url.gsub(/\_{(.*?)\}_/) { eval($1) }
+  end
+
 end

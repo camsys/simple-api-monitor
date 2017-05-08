@@ -4,7 +4,7 @@ class Updater
 
   	new_failures = []
     Request.all.each do |request|
-      new_failures += request.update  
+      new_failures += request.refresh
     end
   
   	unless new_failures.count == 0
