@@ -44,6 +44,27 @@
   .col-md-8
     .panel.panel-default
       .panel-heading
+        Headers
+      .panel-body
+        %pre
+          =@request.headers
+
+%br
+.row
+  .col-md-2
+  .col-md-8
+    .panel.panel-default
+      .panel-heading
+        Use SSL?
+      .panel-body
+        =@request.use_ssl
+
+%br
+.row
+  .col-md-2
+  .col-md-8
+    .panel.panel-default
+      .panel-heading
         Response Code
       .panel-body
         =@request.response_code 

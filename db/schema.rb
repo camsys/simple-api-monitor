@@ -10,19 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170501003823) do
+ActiveRecord::Schema.define(version: 20170509002005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "requests", force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "url",           null: false
-    t.string   "name",          null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "url",                           null: false
+    t.string   "name",                          null: false
     t.string   "response_code"
     t.text     "response_body"
     t.datetime "last_updated"
+    t.text     "headers"
+    t.boolean  "use_ssl",       default: false
   end
 
   create_table "tests", force: :cascade do |t|

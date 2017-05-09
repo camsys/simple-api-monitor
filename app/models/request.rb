@@ -4,6 +4,8 @@ class Request < ApplicationRecord
 
   has_many :tests, dependent: :delete_all
 
+  serialize :headers
+
   def status
   	(tests.failing.count > 0) ? false : true
   end
@@ -12,16 +14,16 @@ class Request < ApplicationRecord
     new_failures = []
 
   	#### Make the call
-    begin 
+    #begin 
    	  self.response_code, self.response_body = self.call
    	  self.last_updated = Time.now 
    	  self.save 
-   	rescue
-   	  self.response_code = nil
-   	  self.response_body = nil
-   	  self.last_updated = Time.now 
-   	  self.save 
-   	end
+   	#rescue
+   	#  self.response_code = nil
+   #	  self.response_body = nil
+   #	  self.last_updated = Time.now 
+   #	  self.save 
+   	#end
 
    	#### Run all the tests associated with the call
     tests.each do |test|
@@ -41,7 +43,15 @@ class Request < ApplicationRecord
     url = self.evaluate
     uri = URI.parse(url)
     req = Net::HTTP::Get.new(uri.to_s)
-    res = Net::HTTP.start(uri.host, uri.port) {|http|
+    
+    # Add Headers
+    unless headers.nil?
+      headers.each do |key, value|
+        req.add_field key.to_s, value.to_s
+      end
+    end
+
+    res = Net::HTTP.start(uri.host, uri.port, use_ssl: use_ssl, verify_mode: OpenSSL::SSL::VERIFY_NONE) {|http|
       http.request(req)
     }
     return res.code, res.body
