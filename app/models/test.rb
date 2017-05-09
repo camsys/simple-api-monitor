@@ -17,9 +17,15 @@ class Test < ApplicationRecord
   	  return new_failure
   	end
 
-  	begin
-      body = JSON.parse(request.response_body)
-      code = JSON.parse(request.response_code)
+  	#begin
+      body = nil
+      if request.format == "xml"
+        body = Hash.from_xml(request.response_body)
+      else
+        body = JSON.parse(request.response_body)
+      end
+
+      code = request.response_code
       
       #Replace every instance of _body_ with the actual body of the response. 
       #Replace every instance of _code_ with the actual code of the response.
@@ -31,12 +37,12 @@ class Test < ApplicationRecord
       self.status = new_status
       self.save
       return new_failure
-    rescue
-      new_failure = self.new_failure? false
-      self.status = false
-      self.save
-      return new_failure 
-    end
+    #rescue
+    #  new_failure = self.new_failure? false
+    #  self.status = false
+    #  self.save
+    #  return new_failure 
+    #end
 
   end
 
