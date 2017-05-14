@@ -6,26 +6,70 @@
   =button_to 'Refresh', refresh_request_path(@request), {method: :patch, class: "btn btn-info btn-sm"}
 %br
 
+%h3.text-center
+  Tests
 -@request.tests.each do |test|
   .row
     .col-md-2
-    .col-md-2
-      -if test.status == true
-        .label.label-success
-          Pass
-      -elsif test.status == false
-        .label.label-danger
-          Fail
-      -else 
-        .label.label-default
-          N/A
+    .col-md-1
+      %h5
+        -if test.status == true
+          .label.label-success
+            Pass
+        -elsif test.status == false
+          .label.label-danger
+            Fail
+        -else 
+          .label.label-default
+            N/A
     .col-md-2
       =test.name
     .col-md-2
       =test.key
     .col-md-2
       =test.value
+    .col-md-1.text-right
+      =button_to 'x', test_path(test), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Test: #{test.name}?  This action cannot be undone!"}}
     .col-md-2
+
+%div.row
+  %br
+  %div.col-md-3
+  %div.col-md-6
+    .panel.panel-primary
+      .panel-heading
+        %h4.text-center
+          ="Create a new Test"
+      = simple_form_for @new_test, url: tests_path, html: {class: 'form-horizontal', multipart: true, method: :post }, authenticity_token: true do |f|
+        .panel-body.panel-primary
+          %div.row
+            %div.col-md-3
+              %label
+                = "Name"
+            %div.col-md-9
+              = f.input :name, required:true, label: false, :as => :string, input_html: {style: "width:100%;"}, placeholder: "My Test"
+          %div.row
+            %div.col-md-3
+              %label
+                = "Key"
+            %div.col-md-9
+              = f.input :key, required:true, label: false, :as => :text, input_html: {style: "width:100%;"}, placeholder: "_body_['itinerareis'].count OR _code_"
+          %div.row
+            %div.col-md-3
+              %label
+                = "Value"
+            %div.col-md-9
+              = f.input :value, required:true, label: false, :as => :text, input_html: {style: "width:100%;"}, placeholder: "200"
+          %div.row
+            %div.col-md-12
+              = f.hidden_field :request_id, value: @request.id
+        
+        .panel-footer.panel-primary 
+          %center 
+            = f.submit "OK", class: 'btn action-button btn-primary', role: 'button'
+
+%h3.text-center
+  Request Information
 
 %br
 .row
@@ -76,6 +120,9 @@
         Format
       .panel-body
         =@request.format
+
+%h3.text-center
+  Response Information
 
 %br
 .row

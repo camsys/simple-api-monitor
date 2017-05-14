@@ -52,7 +52,7 @@ class Request < ApplicationRecord
     req = Net::HTTP::Get.new(uri.to_s)
     
     # Add Custom Headers
-    unless headers.nil?
+    unless headers.blank?
       headers.each do |key, value|
         req.add_field key.to_s, value.to_s
       end

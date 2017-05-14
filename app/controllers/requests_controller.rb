@@ -7,6 +7,7 @@ class RequestsController < ApplicationController
 
   def show
   	@request = Request.find(params[:id])
+  	@new_test = Test.new
   end
 
   def create
