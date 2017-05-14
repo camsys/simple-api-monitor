@@ -5,5 +5,10 @@ Rails.application.routes.draw do
   root "requests#index"
 
   resources :requests, :only => [:index, :show, :create, :destroy, :edit]
+  resources :requests do
+    member do
+      patch 'refresh'
+    end
+  end
 
 end

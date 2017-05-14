@@ -1,5 +1,10 @@
 %h1.text-center
   =@request.name
+%div.row.text-center
+  ="Last Run: #{@request.last_updated}"  
+%h4.text-center
+  =button_to 'Refresh', refresh_request_path(@request), {method: :patch, class: "btn btn-info btn-sm"}
+%br
 
 -@request.tests.each do |test|
   .row
@@ -76,7 +81,7 @@
 .row
   .col-md-2
   .col-md-8
-    .panel.panel-default
+    .panel.panel-info
       .panel-heading
         Response Code
       .panel-body
@@ -86,7 +91,7 @@
 .row
   .col-md-2
   .col-md-8
-    .panel.panel-default
+    .panel.panel-info
       .panel-heading
         Response Body
       .panel-body

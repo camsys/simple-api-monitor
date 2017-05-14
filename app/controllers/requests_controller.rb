@@ -20,6 +20,12 @@ class RequestsController < ApplicationController
   	redirect_to requests_path
   end
 
+  def refresh
+  	@request = Request.find(params[:id])
+  	@request.refresh
+  	redirect_to request_path(@request)
+  end
+
   private
 
   def request_params
