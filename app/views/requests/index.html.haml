@@ -4,18 +4,21 @@
 -@requests.each do |request|
   .row
     .col-md-3
-    .col-md-2
-      =link_to(request_path(request)) do
-        -if request.status
-          .label.label-success
-            Pass
-        -else
-          .label.label-danger
-            Fail
+    .col-md-1
+      %h4
+        =link_to(request_path(request)) do
+          -if request.status
+            .label.label-success
+              Pass
+          -else
+            .label.label-danger
+              Fail
     .col-md-2
       =request.name
     .col-md-2
       =request.last_updated
+    .col-md-1.text-right
+      =button_to 'x', request_path(request), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Request: #{request.name}?  This action cannot be undone!"}}
     .col-md-3
 
 %div.row

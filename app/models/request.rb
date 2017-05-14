@@ -44,7 +44,7 @@ class Request < ApplicationRecord
    end
 
   def call 
-    # The following will find all instances of _{ blah }_ and then evaluate the blay
+    # The following will find all instances of _{ blah }_ and then evaluate the blah
     # E.g., 'http://www.checksomething.com/at/_{(Time.now+2.weeks).strftime('%d-%m-%Y')}_' will be translated into
     #       'http://www.checksomething.com/at/22-05-2017' # (Assuming that the request is run on May 8, 2017)
     url = self.evaluate
