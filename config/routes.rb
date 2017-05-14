@@ -4,6 +4,6 @@ Rails.application.routes.draw do
 
   root "requests#index"
 
-  resources :requests, :only => [:index, :show]
+  resources :requests, :only => [:index, :show, :create, :destroy, :edit]
 
 end

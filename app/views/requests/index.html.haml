@@ -1,6 +1,9 @@
+%h1.text-center
+  Requests
+
 -@requests.each do |request|
   .row
-    .col-md-2
+    .col-md-3
     .col-md-2
       =link_to(request_path(request)) do
         -if request.status
@@ -9,8 +12,53 @@
         -else
           .label.label-danger
             Fail
-    .col-md-3
-      =request.name
-    .col-md-3
-      =request.last_updated
     .col-md-2
+      =request.name
+    .col-md-2
+      =request.last_updated
+    .col-md-3
+
+%div.row
+  %br
+  %div.col-md-3
+  %div.col-md-6
+    .panel.panel-primary
+      .panel-heading
+        %h4.text-center
+          ="Create a new Request"
+      = simple_form_for @new_request, url: requests_path, html: {class: 'form-horizontal', multipart: true, method: :post }, authenticity_token: true do |f|
+        .panel-body.panel-primary
+          %div.row
+            %div.col-md-3
+              %label
+                = "Name"
+            %div.col-md-9
+              = f.input :name, required:true, label: false, :as => :string, input_html: {style: "width:100%;"}, placeholder: "My Test"
+          %div.row
+            %div.col-md-3
+              %label
+                = "URL"
+            %div.col-md-9
+              = f.input :url, required:true, label: false, :as => :text, input_html: {style: "width:100%;"}, placeholder: "http://www.someurl.com"
+          %div.row
+            %div.col-md-3
+              %label
+                = "Headers"
+            %div.col-md-9
+              = f.input :headers, required:true, label: false, :as => :text, input_html: {style: "width:100%;"}, placeholder: "{'X-Header-1': 'some value', 'X-Header-2': 'some value'}"
+          %div.row
+            %div.col-md-3
+              %label
+                = "SSL"
+            %div.col-md-9
+              = f.input :use_ssl, required:true, label: false, :as => :boolean
+          %div.row
+            %div.col-md-3
+              %label
+                = "Format"
+            %div.col-md-9
+              = f.input :format, label: false, collection: Request::SUPPORTED_FORMATS, include_blank: false
+        
+        .panel-footer.panel-primary 
+          %center 
+            = f.submit "OK", class: 'btn action-button btn-primary', role: 'button'

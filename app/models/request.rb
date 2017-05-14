@@ -6,6 +6,13 @@ class Request < ApplicationRecord
 
   serialize :headers
 
+  #Validations
+  validates :name, presence: true
+  validates :url, presence: true
+
+  #Constants
+  SUPPORTED_FORMATS = ['xml', 'json']
+
   def status
   	(tests.failing.count > 0) ? false : true
   end
