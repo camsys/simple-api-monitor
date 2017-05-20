@@ -144,3 +144,6 @@
       .panel-body
         %pre
           =@request.response_body
+
+-if @request.tests.count > 0
+  = render "chart"

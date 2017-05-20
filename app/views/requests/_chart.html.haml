@@ -1,0 +1,38 @@
+.col-md-1
+.col-md-10
+  #chart_div
+
+:javascript
+  google.charts.load('current', {packages: ['corechart', 'line']});
+  google.charts.setOnLoadCallback(drawBackgroundColor);
+
+  function drawBackgroundColor() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'X');
+      data.addColumn('number', '#{ @request.tests.first.name }' );
+
+      var history = #{raw @request.tests.first.history_array};
+      var arrayLength = history.length;
+      for (var i = 0; i < arrayLength; i++) {
+        data.addRows([
+          [new Date(history[i][0]), history[i][1]]
+        ]);
+      }
+
+      var options = {
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'Up',
+          viewWindowMode:'explicit',
+          viewWindow: {
+            max:1,
+            min:0
+          }
+        }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }

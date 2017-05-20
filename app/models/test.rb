@@ -85,4 +85,9 @@ class Test < ApplicationRecord
     (history.count{ |x| x[:result] == true }).to_f / history.count.to_f
   end
 
+  # This should probably be in a serializer. It is used to generate the charts
+  def history_array
+    history.collect{ |x| [x[:time].to_s, (x[:result] ? 1 : 0)  ]}
+  end
+
 end
