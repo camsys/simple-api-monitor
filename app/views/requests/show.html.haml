@@ -149,6 +149,6 @@
   %h3.text-center
     History
   .row.text-center
-    ="Pass Rate: #{@request.tests.first.pass_rate*100}%"
+    ="Pass Rate: #{@request.tests.first.pass_rate.round(2)*100}%"
     
   = render "chart"
