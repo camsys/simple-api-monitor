@@ -71,6 +71,9 @@ class Test < ApplicationRecord
   end
 
   def add_history result
+    if self.history.nil?
+      self.history = []
+    end
     self.history << {time: Time.now, result: result}
   end
 
