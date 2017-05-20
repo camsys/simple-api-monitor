@@ -78,6 +78,9 @@ class Test < ApplicationRecord
   end
 
   def pass_rate
+    if history.count == 0
+      return 0.0
+    end
     # Successes / Total 
     (history.count{ |x| x[:result] == true }).to_f / history.count.to_f
   end
