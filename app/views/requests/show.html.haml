@@ -148,4 +148,7 @@
 -if @request.tests.count > 0
   %h3.text-center
     History
+  .row.text-center
+    ="Pass Rate: #{@request.tests.first.pass_rate*100}%"
+    
   = render "chart"
