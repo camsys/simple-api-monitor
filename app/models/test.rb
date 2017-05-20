@@ -4,16 +4,20 @@ class Test < ApplicationRecord
 
   serialize :key
   serialize :value
+  serialize :history
 
   scope :failing, -> { where(:status => false) }
   scope :passing, -> { where(:status => true) }
 
   def run
 
-  	if request.response_body.nil? or request.response_code.nil?
+    purge_history
+  	
+    if request.response_body.nil? or request.response_code.nil?
       new_failure = self.new_failure? false
       self.status = false
-  	  self.save
+      add_history false
+      self.save
   	  return new_failure
   	end
 
@@ -35,11 +39,13 @@ class Test < ApplicationRecord
       new_status = (result.to_s == value.to_s)
       new_failure = self.new_failure? new_status
       self.status = new_status
+      add_history new_status
       self.save
       return new_failure
     rescue
       new_failure = self.new_failure? false
       self.status = false
+      add_history false
       self.save
       return new_failure 
     end
@@ -52,6 +58,25 @@ class Test < ApplicationRecord
     else
       return false
     end
+  end
+
+  # Delete all history over 2 weeks old 
+  # todo: make this 2 weeks a configurable
+  def purge_history
+    unless history.nil?
+      two_weeks_ago = Time.now - 2.weeks
+      self.history.delete_if { |x| x[:time] < two_weeks_ago }
+      self.save
+    end
+  end
+
+  def add_history result
+    self.history << {time: Time.now, result: result}
+  end
+
+  def pass_rate
+    # Successes / Total 
+    (history.count{ |x| x[:result] == true }).to_f / history.count.to_f
   end
 
 end
