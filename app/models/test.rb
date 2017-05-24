@@ -78,7 +78,7 @@ class Test < ApplicationRecord
   end
 
   def pass_rate
-    if history.count == 0
+    if history.blank?
       return 0.0
     end
     # Successes / Total 
@@ -87,6 +87,9 @@ class Test < ApplicationRecord
 
   # This should probably be in a serializer. It is used to generate the charts
   def history_array
+    if history.blank?
+      return []
+    end
     history.collect{ |x| [x[:time].to_s, (x[:result] ? 1 : 0)  ]}
   end
 
