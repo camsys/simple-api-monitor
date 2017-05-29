@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   end
 
   resources :tests, :only => [:create, :destroy]
+  resources :users, :only => [:index, :create, :destroy]
 
 end

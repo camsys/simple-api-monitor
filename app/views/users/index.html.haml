@@ -1,0 +1,52 @@
+=content_for :title do
+  Staff
+%table.table
+  %tr
+    %th
+      Email
+    %th
+      Last Signed In
+    %th
+      
+  -@staff.each do |member|
+    %tr
+      %td
+        =member.email
+      %td
+        -unless member.last_sign_in_at.nil?
+          =member.last_sign_in_at.strftime("%a, %e %b %Y %H:%M:%S %z").in_time_zone
+      %td
+        -unless member == current_user
+          =button_to 'Delete', user_path(member), {method: :delete, class: "btn btn-danger btn-sm", data: {confirm: "Are you sure?  This action cannot be undone!"}}
+
+%div.row
+  %br
+  %div.col-md-3
+  %div.col-md-6
+    .panel.panel-primary
+      .panel-heading
+        %h4.text-center
+          ="Create a New User"
+      = simple_form_for @new_user, url: users_path, html: {class: 'form-horizontal', multipart: true, method: :post }, authenticity_token: true do |f|
+        .panel-body.panel-primary
+          %div.row
+            %div.col-md-3
+              %label
+                = "Email"
+            %div.col-md-9
+              = f.input :email, required:true, label: false, :as => :string, input_html: {style: "width:100%;"}
+          %div.row
+            %div.col-md-3
+              %label
+                = "Password"
+            %div.col-md-9
+              = f.input :password, required:true, label: false, :as => :password, input_html: {style: "width:100%;"}
+          %div.row
+            %div.col-md-3
+              %label
+                = "Password Confirmation"
+            %div.col-md-9
+              = f.input :password_confirmation, required:true, label: false, :as => :password, input_html: {style: "width:100%;"}
+        .panel-footer.panel-primary 
+          %center 
+            = f.submit "OK", class: 'btn action-button btn-primary', role: 'button'
