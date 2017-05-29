@@ -2,7 +2,20 @@ class RequestsController < ApplicationController
 
   def index
   	@requests = Request.all.order(:name)
-  	@new_request = Request.new
+
+    #This is inefficient, but will be OK for a small number of requets
+    @passing = []
+    @failing = []
+    
+    @requests.each do |request|
+      if request.status
+        @passing << request
+      else
+        @failing << request
+      end
+    end
+  	
+    @new_request = Request.new
   end
 
   def show
