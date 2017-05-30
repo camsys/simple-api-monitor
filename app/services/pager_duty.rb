@@ -6,7 +6,7 @@ class PagerDuty
   	url = "https://events.pagerduty.com/generic/2010-04-15/create_event.json"
 
   	hash = {    
-		  "service_key": ENV['PAGER_DUTY_SERVICE_KEY'],
+		  "service_key": Setting.pager_duty_service_key || "",
 		  "event_type": "trigger",
 		  "description": failures.first,
 		  "details": failures

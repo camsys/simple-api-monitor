@@ -14,4 +14,10 @@ Rails.application.routes.draw do
   resources :tests, :only => [:create, :destroy]
   resources :users, :only => [:index, :create, :destroy]
 
+  resources :settings, :only => [:index] do
+    collection do
+      patch 'set_pager_duty_service_key'
+    end
+  end
+
 end

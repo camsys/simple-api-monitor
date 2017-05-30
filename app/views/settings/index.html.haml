@@ -1,0 +1,20 @@
+%h1.text-center
+  Settings
+
+%div.row
+  %div.col-md-1
+  %div.col-md-10
+    .panel.panel-default
+      .panel-heading
+        %h4
+          = "Set Pager Duty Service Key"
+
+      = simple_form_for @pager_duty_service_key, url: set_pager_duty_service_key_settings_path, html: {class: 'form-horizontal', multipart: true, method: 'patch' }, authenticity_token: true do |f|
+        .panel-body
+          %div.col-md-10
+            %label
+              = "Pager Duty Service Key"
+            = f.input :value, required:true, label: false, :as => :string, input_html: {style: "width:100%;"}
+        .panel-footer 
+          %center 
+            = f.submit "OK", class: 'btn action-button', role: 'button'
