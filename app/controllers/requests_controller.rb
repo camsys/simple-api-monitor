@@ -24,7 +24,12 @@ class RequestsController < ApplicationController
   end
 
   def create
-  	Request.create!(request_params)
+  	request = Request.create!(request_params)
+    #Headers must be handled separately
+    unless headers.blank?
+      request.headers = eval(params[:request][:headers])
+      request.save!
+    end
   	redirect_to requests_path
   end
 
@@ -43,7 +48,7 @@ class RequestsController < ApplicationController
   private
 
   def request_params
-  	params.require(:request).permit(:name, :url, :headers, :use_ssl, :format)
+  	params.require(:request).permit(:name, :url, :use_ssl, :format)
   end
 
  
