@@ -149,3 +149,10 @@
     ="Pass Rate: #{(@request.tests.first.pass_rate*100.0).round(2)}%"
     
   = render "chart"
+
+.row
+  .col-md-5
+  .col-md-2.text-center
+    =button_to 'Delete this Request', request_path(@request), {method: :delete, class: "btn btn-danger btn-xl", data: {confirm: "Are you sure you want to delete Request: #{@request.name}?  This action cannot be undone!"}}
+.row
+  %br

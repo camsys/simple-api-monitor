@@ -1,37 +1,32 @@
 %h1.text-center
   Requests
 
--@failing.each do |request|
-  .row
-    .col-md-3
-    .col-md-1
-      %h4
-        =link_to(request_path(request)) do
-          .label.label-danger
-            Fail
-    .col-md-2
-      =request.name
-    .col-md-2
-      =request.last_updated
-    .col-md-1.text-right
-      =button_to 'x', request_path(request), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Request: #{request.name}?  This action cannot be undone!"}}
-    .col-md-3
+-unless @failing.count == 0
+  %h3.text-center
+    Failing
+  -@failing.in_groups_of(4) do |row|
+    .row
+      .col-md-2
+      -row.each do |request|
+        -if request
+          .col-md-2
+            =link_to(request_path(request)) do
+              .well.danger-well
+                =request.name
 
--@passing.each do |request|
-  .row
-    .col-md-3
-    .col-md-1
-      %h4
-        =link_to(request_path(request)) do
-          .label.label-success
-            Pass
-    .col-md-2
-      =request.name
-    .col-md-2
-      =request.last_updated
-    .col-md-1.text-right
-      =button_to 'x', request_path(request), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Request: #{request.name}?  This action cannot be undone!"}}
-    .col-md-3
+
+-unless @passing.count == 0
+  %h3.text-center
+    Passing
+  -@passing.in_groups_of(4) do |row|
+    .row
+      .col-md-2
+      -row.each do |request|
+        -if request
+          .col-md-2
+            =link_to(request_path(request)) do
+              .well.passing-well
+                =request.name
 
 %div.row
   %br
