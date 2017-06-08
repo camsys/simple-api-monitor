@@ -1,11 +1,18 @@
 class SettingsController < ApplicationController
 
   def index
-    @pager_duty_service_key = Setting.where(key: 'pager_duty_service_key').first_or_initialize
+    @pager_duty_service_key = Setting.where(key: 'pager_duty_service_key').first_or_initialize 
+    @alert_after_fail_count = Setting.where(key: 'alert_after_fail_count').first_or_initialize
   end
 
   def set_pager_duty_service_key
     set_setting params, 'pager_duty_service_key'
+  end
+
+  # How many times must a test fail before alerting?
+  # Used to prevent false alarms due to temporary network issues.
+  def set_alert_after_fail_count
+    set_setting params, 'alert_after_fail_count'
   end
 
   def set_setting params, key

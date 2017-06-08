@@ -14,11 +14,11 @@ class Test < ApplicationRecord
     purge_history
   	
     if request.response_body.nil? or request.response_code.nil?
-      new_failure = self.new_failure? false
       self.status = false
+      self.consecutive_failures += 1
       add_history false
       self.save
-  	  return new_failure
+  	  return self.consecutive_failures == Setting.alert_after_fail_count.to_i
   	end
 
   	begin
@@ -37,27 +37,25 @@ class Test < ApplicationRecord
       
       result = eval(decoded_key)
       new_status = (result.to_s == value.to_s)
-      new_failure = self.new_failure? new_status
       self.status = new_status
+      
+      if new_status == false
+        self.consecutive_failures += 1
+      else
+        self.consecutive_failures = 0
+      end
+      
       add_history new_status
       self.save
-      return new_failure
+      return self.consecutive_failures == Setting.alert_after_fail_count.to_i
     rescue
-      new_failure = self.new_failure? false
       self.status = false
+      self.consecutive_failures += 1
       add_history false
       self.save
-      return new_failure 
+      return self.consecutive_failures == Setting.alert_after_fail_count.to_i
     end
 
-  end
-
-  def new_failure? new_status
-    if self.status and not new_status
-      return true
-    else
-      return false
-    end
   end
 
   # Delete all history over 2 weeks old 

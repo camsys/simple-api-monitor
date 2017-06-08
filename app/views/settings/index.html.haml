@@ -3,12 +3,13 @@
 
 %div.row
   %div.col-md-1
-  %div.col-md-10
+  %div.col-md-5
     .panel.panel-default
       .panel-heading
         %h4
-          = "Set Pager Duty Service Key"
+          = "Pager Duty Settings"
 
+      
       = simple_form_for @pager_duty_service_key, url: set_pager_duty_service_key_settings_path, html: {class: 'form-horizontal', multipart: true, method: 'patch' }, authenticity_token: true do |f|
         .panel-body
           %div.col-md-10
@@ -18,3 +19,18 @@
         .panel-footer 
           %center 
             = f.submit "OK", class: 'btn action-button', role: 'button'
+  %div.col-md-5
+    .panel.panel-default
+      .panel-heading
+        %h4
+          = "Alerts Settings"   
+      = simple_form_for @alert_after_fail_count, url: set_alert_after_fail_count_settings_path, html: {class: 'form-horizontal', multipart: true, method: 'patch' }, authenticity_token: true do |f|
+        .panel-body
+          %div.col-md-10
+            %label
+              = "How many consecutive failures before sending alerts?"
+            = f.input :value, label: false, include_blank: false, collection: 1..5, input_html: {style: "width:100%;"}
+        .panel-footer 
+          %center 
+            = f.submit "OK", class: 'btn action-button', role: 'button'
+

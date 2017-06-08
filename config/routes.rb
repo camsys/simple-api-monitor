@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :settings, :only => [:index] do
     collection do
       patch 'set_pager_duty_service_key'
+      patch 'set_alert_after_fail_count'
     end
   end
 

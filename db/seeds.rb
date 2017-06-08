@@ -7,3 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create!(email: 'admin@example.com', password: 'welcome1', password_confirmation: 'welcome1')
+Setting.create!(key: 'set_alert_after_fail_count', value: 2)
