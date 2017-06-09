@@ -69,15 +69,15 @@
             =button_to 'Delete', test_path(test), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Test: #{test.name}?  This action cannot be undone!"}}
 
       -else
-        .panel.panel-info
-          .panel-heading.panel-info
+        .panel.panel-default
+          .panel-heading.panel-default
             .row
               .col-md-8.text-left
                 =test.name
               .col-md-4.text-right
                 N/A
 
-          .panel-body.panel-info
+          .panel-body.panel-default
             .row
               .col-md-4
                 Key
@@ -88,7 +88,7 @@
                 Expected Value
               .col-md-8
                 =test.value
-          .panel-footer.panel-info.text-center
+          .panel-footer.panel-default.text-center
             =button_to 'Delete', test_path(test), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Test: #{test.name}?  This action cannot be undone!"}}
 
 %div.row
