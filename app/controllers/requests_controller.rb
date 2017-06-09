@@ -24,13 +24,22 @@ class RequestsController < ApplicationController
   end
 
   def create
-  	request = Request.create!(request_params)
+  	request = Request.create(request_params)
     #Headers must be handled separately
     unless headers.blank?
-      request.headers = eval(params[:request][:headers])
-      request.save!
+      begin 
+        request.headers = eval(params[:request][:headers])
+      rescue
+        request.errors.add(:headers, :blank, message: "Invalid Headers")
+      end 
     end
-  	redirect_to requests_path
+    if request.save
+      redirect_to requests_path, flash: { success: "Request Created" }
+    else
+      request.validate
+      redirect_to requests_path, flash: { danger: request.errors.full_messages.first}
+    end
+
   end
 
   def destroy
