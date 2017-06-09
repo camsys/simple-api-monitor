@@ -55,6 +55,16 @@
                 Expected Value
               .col-md-8
                 =test.value
+            .row
+              .col-md-4
+                Actual value
+              .col-md-8
+                =test.actual_value
+            .row 
+              .col-md-4
+                Consecutive Failures
+              .col-md-8
+                =test.consecutive_failures
           .panel-footer.panel-danger.text-center
             =button_to 'Delete', test_path(test), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Test: #{test.name}?  This action cannot be undone!"}}
 

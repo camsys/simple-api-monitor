@@ -4,6 +4,7 @@ class Test < ApplicationRecord
 
   serialize :key
   serialize :value
+  serialize :actual_value
   serialize :history
 
   scope :failing, -> { where(:status => false) }
@@ -12,6 +13,8 @@ class Test < ApplicationRecord
   def run
 
     purge_history
+
+    self.actual_value = nil
   	
     if request.response_body.nil? or request.response_code.nil?
       self.status = false
@@ -36,6 +39,7 @@ class Test < ApplicationRecord
       decoded_key = self.key.gsub('_body_', body.to_s).gsub('_code_', code.to_s)      
       
       result = eval(decoded_key)
+      self.actual_value = result
       new_status = (result.to_s == value.to_s)
       self.status = new_status
       
