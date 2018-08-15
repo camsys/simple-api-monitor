@@ -1,8 +1,8 @@
 %h1.text-center
   Requests
 -unless @failing_high.count == 0
-  %h3.text-center
-    Failing (High Priority)
+  %h3.text-center Failing 
+  %h4.text-center High Priority
   -@failing_high.in_groups_of(4) do |row|
     .row
       .col-md-2
@@ -14,8 +14,8 @@
                 =request.name
 
 -unless @failing_low.count == 0
-  %h3.text-center
-    Failing (Low Priority)
+  %h3.text-center Failing
+  %h4.text-center Low Priority
   -@failing_low.in_groups_of(4) do |row|
     .row
       .col-md-2
