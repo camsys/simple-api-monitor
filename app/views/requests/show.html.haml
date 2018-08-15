@@ -35,7 +35,7 @@
           .panel-footer.panel-success.text-center
             =button_to 'Delete', test_path(test), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Test: #{test.name}?  This action cannot be undone!"}}
      
-      -elsif test.status == false
+      -elsif test.status == false and test.priority == Test::HIGH
         .panel.panel-danger
           .panel-heading.panel-danger
             .row
@@ -45,6 +45,11 @@
                 Failing
 
           .panel-body.panel-danger
+            .row
+              .col-md-4
+                Priority
+              .col-md-8
+                =test.priority_string
             .row
               .col-md-4
                 Key
@@ -68,6 +73,44 @@
           .panel-footer.panel-danger.text-center
             =button_to 'Delete', test_path(test), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Test: #{test.name}?  This action cannot be undone!"}}
 
+      -elsif test.status == false and test.priority == Test::LOW
+        .panel.panel-warning
+          .panel-heading.panel-warning
+            .row
+              .col-md-8.text-left
+                =test.name
+              .col-md-4.text-right
+                Failing
+
+          .panel-body.panel-warning
+            .row
+              .col-md-4
+                Priority
+              .col-md-8
+                =test.priority_string
+            .row
+              .col-md-4
+                Key
+              .col-md-8
+                =test.key
+            .row    
+              .col-md-4
+                Expected Value
+              .col-md-8
+                =test.value
+            .row
+              .col-md-4
+                Actual value
+              .col-md-8
+                =test.actual_value
+            .row 
+              .col-md-4
+                Consecutive Failures
+              .col-md-8
+                =test.consecutive_failures
+          .panel-footer.panel-warning.text-center
+            =button_to 'Delete', test_path(test), {method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "Are you sure you want to delete Test: #{test.name}?  This action cannot be undone!"}}
+
       -else
         .panel.panel-default
           .panel-heading.panel-default
@@ -78,6 +121,11 @@
                 N/A
 
           .panel-body.panel-default
+            .row
+              .col-md-4
+                Priority
+              .col-md-8
+                =test.priority_string            
             .row
               .col-md-4
                 Key
@@ -119,6 +167,12 @@
                 = "Value"
             %div.col-md-9
               = f.input :value, required:true, label: false, :as => :text, input_html: {style: "width:100%;"}, placeholder: "200"
+          %div.row
+            %div.col-md-3
+              %label
+                = "Priority"
+            %div.col-md-9
+              = f.input :priority, required:true, label: false, collection: [['High', Test::HIGH],['Low', Test::LOW]], input_html: {style: "width:100%;"}
           %div.row
             %div.col-md-12
               = f.hidden_field :request_id, value: @request.id

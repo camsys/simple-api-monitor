@@ -33,8 +33,9 @@ class Request < ApplicationRecord
    	end
 
    	#### Run all the tests associated with the call
+    ### If a high priority test fails, call on Pager Duty
     tests.each do |test|
-   	  if test.run  
+   	  if test.run  and test.priority == Test::HIGH
         new_failures << "#{self.name}: #{test.name}"
       end  
    	end

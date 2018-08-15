@@ -5,13 +5,18 @@ class RequestsController < ApplicationController
 
     #This is inefficient, but will be OK for a small number of requets
     @passing = []
-    @failing = []
+    @failing_high = []
+    @failing_low = []
     
     @requests.each do |request|
       if request.status
         @passing << request
       else
-        @failing << request
+        if request.tests.failing.high_priority.count > 0
+          @failing_high << request
+        else
+          @failing_low << request 
+        end
       end
     end
   	
