@@ -43,6 +43,11 @@ a:hover{
   box-shadow: 0 0 8px rgba(217,84,80, 0.6);
 }
 
+.warning-well:hover{
+  border-color: #66afe9;
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.6);
+}
+
 .passing-well:hover{
   border-color: #66afe9;
   box-shadow: 0 0 8px rgba(92,184,92, 0.6);
