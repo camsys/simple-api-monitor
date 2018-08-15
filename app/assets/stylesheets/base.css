@@ -28,7 +28,7 @@
     font-size: large;
 }
 
-.panel-heading.panel-passing {
+.panel-heading.panel-success {
     background: rgb(92, 184, 92);
     color: white;
     font-size: large;
