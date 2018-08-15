@@ -32,18 +32,26 @@ class Test < ApplicationRecord
 
   	begin
       body = nil
+      title = nil
       if request.format == "xml"
         body = Hash.from_xml(request.response_body)
-      else
+      elsif request.format == "json"
         body = JSON.parse(request.response_body)
+      elsif request.format == "html"
+        title = [Nokogiri::HTML(request.response_body).title]
       end
 
       code = request.response_code
       
       #Replace every instance of _body_ with the actual body of the response. 
       #Replace every instance of _code_ with the actual code of the response.
-      decoded_key = self.key.gsub('_body_', body.to_s).gsub('_code_', code.to_s)      
-      
+      #Replace every instance of _title_ with the HTML title
+      if request.format == "html"
+        decoded_key = self.key.gsub('_code_', code.to_s).gsub('_title_', title.to_s)      
+      else
+        decoded_key = self.key.gsub('_body_', body.to_s).gsub('_code_', code.to_s)
+      end
+
       result = eval(decoded_key)
       self.actual_value = result
       new_status = (result.to_s == value.to_s)

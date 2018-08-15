@@ -11,7 +11,7 @@ class Request < ApplicationRecord
   validates :url, presence: true
 
   #Constants
-  SUPPORTED_FORMATS = ['xml', 'json']
+  SUPPORTED_FORMATS = ['xml', 'json', 'html']
 
   def status
   	(tests.failing.count > 0) ? false : true
