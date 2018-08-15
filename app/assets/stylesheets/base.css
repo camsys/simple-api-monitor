@@ -4,7 +4,31 @@
     font-size: large;
 }
 
+.warning-well {
+    background: rgb(255, 193, 7);
+    color: white;
+    font-size: large;
+}
+
 .passing-well {
+    background: rgb(92, 184, 92);
+    color: white;
+    font-size: large;
+}
+
+.panel-heading.panel-danger {
+    background: rgb(217, 84, 80);
+    color: white;
+    font-size: large;
+}
+
+.panel-heading.panel-warning {
+    background: rgb(255, 193, 7);
+    color: white;
+    font-size: large;
+}
+
+.panel-heading.panel-passing {
     background: rgb(92, 184, 92);
     color: white;
     font-size: large;

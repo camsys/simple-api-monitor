@@ -9,6 +9,12 @@ class Test < ApplicationRecord
 
   scope :failing, -> { where(:status => false) }
   scope :passing, -> { where(:status => true) }
+  scope :high_priority, -> { where(:priority => Test::HIGH )}
+  scope :low_priority, -> { where(:priority => Test::LOW )}
+
+  #Constants
+  HIGH = 1
+  LOW = 0
 
   def run
 
@@ -93,6 +99,15 @@ class Test < ApplicationRecord
       return []
     end
     history.collect{ |x| [x[:time].to_s, (x[:result] ? 1 : 0)  ]}
+  end
+
+  def priority_string
+    case priority
+    when Test::HIGH
+      return "High"
+    else
+      return "Low"
+    end
   end
 
 end

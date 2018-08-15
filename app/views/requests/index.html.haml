@@ -1,10 +1,9 @@
 %h1.text-center
   Requests
-
--unless @failing.count == 0
+-unless @failing_high.count == 0
   %h3.text-center
-    Failing
-  -@failing.in_groups_of(4) do |row|
+    Failing (High Priority)
+  -@failing_high.in_groups_of(4) do |row|
     .row
       .col-md-2
       -row.each do |request|
@@ -12,6 +11,19 @@
           .col-md-2
             =link_to(request_path(request)) do
               .well.danger-well
+                =request.name
+
+-unless @failing_low.count == 0
+  %h3.text-center
+    Failing (Low Priority)
+  -@failing_low.in_groups_of(4) do |row|
+    .row
+      .col-md-2
+      -row.each do |request|
+        -if request
+          .col-md-2
+            =link_to(request_path(request)) do
+              .well.warning-well
                 =request.name
 
 

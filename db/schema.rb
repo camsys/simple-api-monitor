@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609002919) do
+ActiveRecord::Schema.define(version: 20180815160107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20170609002919) do
     t.text     "history"
     t.integer  "consecutive_failures", default: 0, null: false
     t.text     "actual_value"
+    t.integer  "priority",             default: 0, null: false
     t.index ["request_id"], name: "index_tests_on_request_id", using: :btree
   end
 

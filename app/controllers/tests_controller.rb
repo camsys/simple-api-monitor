@@ -15,7 +15,7 @@ class TestsController < ApplicationController
   private
 
   def request_params
-  	params.require(:test).permit(:name, :key, :value, :request_id)
+  	params.require(:test).permit(:name, :key, :value, :request_id, :priority)
   end
 
  
