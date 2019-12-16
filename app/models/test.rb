@@ -52,7 +52,17 @@ class Test < ApplicationRecord
         decoded_key = self.key.gsub('_body_', body.to_s).gsub('_code_', code.to_s)
       end
 
-      result = eval(decoded_key)
+      result = nil 
+      begin
+        result = eval(decoded_key)
+      rescue Exception => exc
+        self.status = false
+        self.consecutive_failures += 1
+        add_history false
+        self.save
+        return self.consecutive_failures == Setting.alert_after_fail_count.to_i
+      end
+      
       self.actual_value = result
       new_status = (result.to_s == value.to_s)
       self.status = new_status
