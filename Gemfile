@@ -41,7 +41,7 @@ gem 'devise'
 ### Internal Views #########################
 gem 'awesome_print'
 gem 'haml-rails'
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'simple_form'
 ############################################
 
